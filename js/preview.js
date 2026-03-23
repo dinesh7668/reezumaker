@@ -7,7 +7,7 @@ const PreviewManager = (() => {
     let currentTemplate = 'minimal';
     let zoomLevel = 100;
     let isEditMode = false;
-    const MIN_ZOOM = 50;
+    const MIN_ZOOM = 30;
     const MAX_ZOOM = 150;
 
     /**

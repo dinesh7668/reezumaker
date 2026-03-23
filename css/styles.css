@@ -1040,6 +1040,9 @@ select {
     .preview-panel.visible {
         transform: translateX(0);
     }
+    .preview-wrapper {
+        overflow-x: hidden;
+    }
     .step-navigation {
         width: 100%;
     }
