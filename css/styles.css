@@ -862,6 +862,11 @@ select {
     border-radius: var(--radius-md);
 }
 
+.resume-scale-wrapper {
+    position: relative;
+    transition: width var(--transition-fast), height var(--transition-fast);
+}
+
 .resume-page {
     width: 210mm;
     min-height: 297mm;
@@ -869,9 +874,12 @@ select {
     color: #1a1a2e;
     box-shadow: var(--shadow-xl);
     flex-shrink: 0;
-    transition: zoom var(--transition-fast);
+    transform-origin: top left;
+    transition: transform var(--transition-fast);
     font-family: 'Inter', sans-serif;
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
     overflow: hidden;
 }
 

@@ -37,6 +37,9 @@ const PreviewManager = (() => {
 
         const html = TemplateEngine.render(currentTemplate, data);
         previewEl.innerHTML = html;
+        
+        // Ensure wrapper resizes if content triggers new height
+        requestAnimationFrame(() => setZoom(zoomLevel));
     }
 
     /**
@@ -176,11 +179,25 @@ const PreviewManager = (() => {
     function setZoom(level) {
         zoomLevel = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, level));
         const previewEl = document.getElementById('resume-preview');
-        if (previewEl) {
-            // Use CSS zoom so the layout bounding box scales correctly on mobile,
-            // preventing the left-edge overflow clipping issue.
-            previewEl.style.zoom = zoomLevel / 100;
+        const scaleWrapperEl = document.getElementById('scale-wrapper');
+        
+        if (previewEl && scaleWrapperEl) {
+            const scale = zoomLevel / 100;
+            previewEl.style.transform = `scale(${scale})`;
+            
+            // Adjust the wrapper's physical dimensions to perfectly match the nested scaled resume.
+            // This is the cleanest fix for mobile Flex centering clipping!
+            requestAnimationFrame(() => {
+                const w = previewEl.offsetWidth || 794;
+                const h = previewEl.scrollHeight || 1123;
+                scaleWrapperEl.style.width = `${Math.ceil(w * scale)}px`;
+                scaleWrapperEl.style.height = `${Math.ceil(h * scale)}px`;
+            });
+        } else if (previewEl) {
+            // Fallback if wrapper isn't found
+            previewEl.style.transform = `scale(${zoomLevel / 100})`;
         }
+        
         document.getElementById('zoom-level').textContent = `${zoomLevel}%`;
     }
 
