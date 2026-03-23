@@ -177,7 +177,9 @@ const PreviewManager = (() => {
         zoomLevel = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, level));
         const previewEl = document.getElementById('resume-preview');
         if (previewEl) {
-            previewEl.style.transform = `scale(${zoomLevel / 100})`;
+            // Use CSS zoom so the layout bounding box scales correctly on mobile,
+            // preventing the left-edge overflow clipping issue.
+            previewEl.style.zoom = zoomLevel / 100;
         }
         document.getElementById('zoom-level').textContent = `${zoomLevel}%`;
     }

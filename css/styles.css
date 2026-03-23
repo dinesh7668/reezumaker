@@ -869,8 +869,7 @@ select {
     color: #1a1a2e;
     box-shadow: var(--shadow-xl);
     flex-shrink: 0;
-    transform-origin: top center;
-    transition: transform var(--transition-base);
+    transition: zoom var(--transition-fast);
     font-family: 'Inter', sans-serif;
     position: relative;
     overflow: hidden;
