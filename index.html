@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Build professional ATS-friendly resumes with our modern resume builder. Choose from multiple templates and download as PDF.">
+    <title>ResumeForge — Resume Builder</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- html2pdf.js for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/templates.css">
+</head>
+<body>
+    <!-- ===== LOADING SCREEN ===== -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loader-content">
+            <div class="loader-icon">
+                <svg viewBox="0 0 60 60" fill="none">
+                    <rect x="4" y="8" width="40" height="48" rx="4" stroke="url(#grad)" stroke-width="2.5"/>
+                    <line x1="12" y1="20" x2="36" y2="20" stroke="url(#grad)" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="12" y1="28" x2="30" y2="28" stroke="url(#grad)" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="12" y1="36" x2="33" y2="36" stroke="url(#grad)" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="12" y1="44" x2="26" y2="44" stroke="url(#grad)" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="44" cy="44" r="14" stroke="url(#grad)" stroke-width="2.5" class="loader-circle"/>
+                    <path d="M44 37V44H51" stroke="url(#grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <defs>
+                        <linearGradient id="grad" x1="0" y1="0" x2="60" y2="60">
+                            <stop offset="0%" stop-color="#6366f1"/>
+                            <stop offset="100%" stop-color="#a855f7"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <h2 class="loader-title">ResumeForge</h2>
+            <p class="loader-subtitle">Initializing your workspace...</p>
+            <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+        </div>
+    </div>
+
+    <!-- ===== HEADER / NAVBAR ===== -->
+    <header id="app-header" class="app-header">
+        <div class="header-inner">
+            <div class="header-brand">
+                <div class="brand-icon">
+                    <i data-lucide="file-text"></i>
+                </div>
+                <h1 class="brand-name">Resume<span class="brand-accent">Forge</span></h1>
+            </div>
+            <nav class="header-actions">
+                <button id="btn-save" class="btn btn-ghost" title="Save to browser">
+                    <i data-lucide="save"></i>
+                    <span>Save</span>
+                </button>
+                <button id="btn-load" class="btn btn-ghost" title="Load saved resume">
+                    <i data-lucide="folder-open"></i>
+                    <span>Load</span>
+                </button>
+                <button id="btn-reset" class="btn btn-ghost btn-danger-ghost" title="Clear all data">
+                    <i data-lucide="trash-2"></i>
+                    <span>Reset</span>
+                </button>
+                <div class="header-divider"></div>
+                <button id="btn-theme" class="btn btn-icon" title="Toggle theme">
+                    <i data-lucide="moon" class="theme-icon-dark"></i>
+                    <i data-lucide="sun" class="theme-icon-light"></i>
+                </button>
+                <button id="btn-download" class="btn btn-primary" title="Download as PDF">
+                    <i data-lucide="download"></i>
+                    <span>Download PDF</span>
+                </button>
+            </nav>
+            <!-- Mobile menu toggle -->
+            <button id="btn-mobile-menu" class="btn btn-icon mobile-only">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <button id="btn-save-m" class="btn btn-ghost"><i data-lucide="save"></i><span>Save</span></button>
+            <button id="btn-load-m" class="btn btn-ghost"><i data-lucide="folder-open"></i><span>Load</span></button>
+            <button id="btn-reset-m" class="btn btn-ghost btn-danger-ghost"><i data-lucide="trash-2"></i><span>Reset</span></button>
+            <button id="btn-theme-m" class="btn btn-ghost"><i data-lucide="palette"></i><span>Toggle Theme</span></button>
+            <button id="btn-download-m" class="btn btn-primary"><i data-lucide="download"></i><span>Download PDF</span></button>
+        </div>
+    </header>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main id="app-main" class="app-main">
+        <!-- ===== LEFT PANEL — FORM ===== -->
+        <section id="form-panel" class="panel form-panel">
+            <!-- Template Selector -->
+            <div class="template-selector" id="template-selector">
+                <h3 class="section-label"><i data-lucide="layout-template"></i> Choose Template</h3>
+                <div class="template-grid">
+                    <button class="template-card active" data-template="minimal">
+                        <div class="template-preview tp-minimal">
+                            <div class="tp-bar"></div><div class="tp-line w80"></div><div class="tp-line w60"></div>
+                            <div class="tp-line w90"></div><div class="tp-line w40"></div>
+                        </div>
+                        <span>Minimal</span>
+                    </button>
+                    <button class="template-card" data-template="modern">
+                        <div class="template-preview tp-modern">
+                            <div class="tp-sidebar"></div>
+                            <div class="tp-content"><div class="tp-line w80"></div><div class="tp-line w60"></div><div class="tp-line w90"></div></div>
+                        </div>
+                        <span>Modern</span>
+                    </button>
+                    <button class="template-card" data-template="elegant">
+                        <div class="template-preview tp-elegant">
+                            <div class="tp-header-bar"></div>
+                            <div class="tp-line w80"></div><div class="tp-line w60"></div>
+                            <div class="tp-divider"></div>
+                            <div class="tp-line w90"></div>
+                        </div>
+                        <span>Elegant</span>
+                    </button>
+                    <button class="template-card" data-template="ats">
+                        <div class="template-preview tp-ats">
+                            <div class="tp-line w100 bold"></div>
+                            <div class="tp-line w60"></div>
+                            <div class="tp-line w80"></div><div class="tp-line w90"></div><div class="tp-line w70"></div>
+                        </div>
+                        <span>ATS</span>
+                    </button>
+                    <button class="template-card" data-template="dp">
+                        <div class="template-preview tp-dp">
+                            <div class="tp-line w60 bold"></div>
+                            <div class="tp-line w40"></div>
+                            <div class="tp-pill w100" style="background:var(--primary); height:4px; border-radius:4px;"></div>
+                            <div class="tp-line w90"></div>
+                            <div class="tp-line w70"></div>
+                        </div>
+                        <span>DP</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step Progress -->
+            <div class="step-progress" id="step-progress">
+                <div class="progress-track">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <div class="step-indicators" id="step-indicators">
+                    <!-- Generated by JS -->
+                </div>
+            </div>
+
+            <!-- Form Steps Container -->
+            <div class="form-steps" id="form-steps">
+
+                <!-- STEP 1: Personal Information -->
+                <div class="form-step active" data-step="0">
+                    <div class="step-header">
+                        <div class="step-icon"><i data-lucide="user"></i></div>
+                        <div>
+                            <h2 class="step-title">Personal Information</h2>
+                            <p class="step-desc">Let's start with your basic details</p>
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group span-2">
+                            <label for="fullName">Full Name *</label>
+                            <input type="text" id="fullName" placeholder="e.g. John Doe" data-field="fullName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" placeholder="john@example.com" data-field="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone *</label>
+                            <input type="tel" id="phone" placeholder="+1 (555) 123-4567" data-field="phone" required>
+                        </div>
+                        <div class="form-group span-2">
+                            <label for="address">Address</label>
+                            <input type="text" id="address" placeholder="City, State, Country" data-field="address">
+                        </div>
+                        <div class="form-group">
+                            <label for="linkedin">LinkedIn</label>
+                            <input type="url" id="linkedin" placeholder="linkedin.com/in/johndoe" data-field="linkedin">
+                        </div>
+                        <div class="form-group">
+                            <label for="portfolio">Portfolio / Website</label>
+                            <input type="url" id="portfolio" placeholder="johndoe.com" data-field="portfolio">
+                        </div>
+                        <div class="form-group">
+                            <label for="github">GitHub</label>
+                            <input type="url" id="github" placeholder="github.com/johndoe" data-field="github">
+                        </div>
+                        <div class="form-group">
+                            <label for="jobTitle">Job Title</label>
+                            <input type="text" id="jobTitle" placeholder="e.g. Full Stack Developer" data-field="jobTitle">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2: Professional Summary -->
+                <div class="form-step" data-step="1">
+                    <div class="step-header">
+                        <div class="step-icon"><i data-lucide="align-left"></i></div>
+                        <div>
+                            <h2 class="step-title">Professional Summary & Objective</h2>
+                            <p class="step-desc">Write a brief overview of your professional background and career goals</p>
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group span-2">
+                            <label for="summary">Professional Summary</label>
+                            <textarea id="summary" rows="5" placeholder="A results-driven software engineer with 5+ years of experience..." data-field="summary"></textarea>
+                            <span class="char-count" id="summary-count">0 / 500</span>
+                        </div>
+                        <div class="form-group span-2" id="objective-container" style="display: none;">
+                            <label for="objective" style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>Career Objective</span>
+                                <button type="button" class="btn btn-icon btn-sm" id="btn-remove-objective" title="Remove Objective" style="color: var(--danger); width: auto; padding: 0.25rem 0.5rem; height: auto;">
+                                    <i data-lucide="trash-2" style="width: 14px; height: 14px; margin-right: 4px;"></i> Remove
+                                </button>
+                            </label>
+                            <textarea id="objective" rows="3" placeholder="To secure a challenging position that utilizes my skills..." data-field="objective"></textarea>
+                            <span class="char-count" id="objective-count">0 / 250</span>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-add" id="btn-add-objective" style="margin-top: 1rem;">
+                        <i data-lucide="plus-circle"></i> Add Career Objective
+                    </button>
+                </div>
+
+                <!-- STEP 3: Work Experience -->
+                <div class="form-step" data-step="2">
+                    <div class="step-header">
+                        <div class="step-icon"><i data-lucide="briefcase"></i></div>
+                        <div>
+                            <h2 class="step-title">Work Experience</h2>
+                            <p class="step-desc">Add your professional experience</p>
+                        </div>
+                    </div>
+                    <div class="dynamic-entries" id="experience-entries">
+                        <!-- Dynamic entries will be added here -->
+                    </div>
+                    <button class="btn btn-add" id="add-experience">
+                        <i data-lucide="plus-circle"></i> Add Experience
+                    </button>
+                </div>
+
+                <!-- STEP 4: Education -->
+                <div class="form-step" data-step="3">
+                    <div class="step-header">
+                        <div class="step-icon"><i data-lucide="graduation-cap"></i></div>
+                        <div>
+                            <h2 class="step-title">Education</h2>
+                            <p class="step-desc">Add your educational background</p>
+                        </div>
+                    </div>
+                    <div class="dynamic-entries" id="education-entries">
+                        <!-- Dynamic entries will be added here -->
+                    </div>
+                    <button class="btn btn-add" id="add-education">
+                        <i data-lucide="plus-circle"></i> Add Education
+                    </button>
+                </div>
+
+                <!-- STEP 5: Skills -->
+                <div class="form-step" data-step="4">
+                    <div class="step-header">
+                        <div class="step-icon"><i data-lucide="wrench"></i></div>
+                        <div>
+                            <h2 class="step-title">Skills</h2>
+                            <p class="step-desc">List your technical and soft skills</p>
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group span-2">
+                            <label for="skills-input">Add Skills</label>
+                            <div class="tag-input-wrapper" id="skills-wrapper">
+                                <div class="tags-container" id="skills-tags"></div>
+                                <input type="text" id="skills-input" placeholder="e.g. Frontend: React, Redux" class="tag-input">
+                            </div>
+                            <span class="form-hint">Press Enter or comma to add a skill. Try "Frontend: React, Redux" for categorization!</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 6: Projects -->
+                <div class="form-step" data-step="5">
+                    <div class="step-header">
+                        <div class="step-icon"><i data-lucide="folder-kanban"></i></div>
+                        <div>
+                            <h2 class="step-title">Projects</h2>
+                            <p class="step-desc">Showcase your notable projects</p>
+                        </div>
+                    </div>
+                    <div class="dynamic-entries" id="project-entries">
+                        <!-- Dynamic entries will be added here -->
+                    </div>
+                    <button class="btn btn-add" id="add-project">
+                        <i data-lucide="plus-circle"></i> Add Project
+                    </button>
+                </div>
+
+                <!-- STEP 7: Certifications -->
+                <div class="form-step" data-step="6">
+                    <div class="step-header">
+                        <div class="step-icon"><i data-lucide="award"></i></div>
+                        <div>
+                            <h2 class="step-title">Certifications</h2>
+                            <p class="step-desc">Add your professional certifications</p>
+                        </div>
+                    </div>
+                    <div class="dynamic-entries" id="certification-entries">
+                        <!-- Dynamic entries will be added here -->
+                    </div>
+                    <button class="btn btn-add" id="add-certification">
+                        <i data-lucide="plus-circle"></i> Add Certification
+                    </button>
+                </div>
+
+                <!-- STEP 8: Achievements -->
+                <div class="form-step" data-step="7">
+                    <div class="step-header">
+                        <div class="step-icon"><i data-lucide="trophy"></i></div>
+                        <div>
+                            <h2 class="step-title">Achievements</h2>
+                            <p class="step-desc">Highlight your key accomplishments</p>
+                        </div>
+                    </div>
+                    <div class="dynamic-entries" id="achievement-entries">
+                        <!-- Dynamic entries will be added here -->
+                    </div>
+                    <button class="btn btn-add" id="add-achievement">
+                        <i data-lucide="plus-circle"></i> Add Achievement
+                    </button>
+                </div>
+
+                <!-- STEP 9: Languages -->
+                <div class="form-step" data-step="8">
+                    <div class="step-header">
+                        <div class="step-icon"><i data-lucide="languages"></i></div>
+                        <div>
+                            <h2 class="step-title">Languages</h2>
+                            <p class="step-desc">List the languages you speak</p>
+                        </div>
+                    </div>
+                    <div class="dynamic-entries" id="language-entries">
+                        <!-- Dynamic entries will be added here -->
+                    </div>
+                    <button class="btn btn-add" id="add-language">
+                        <i data-lucide="plus-circle"></i> Add Language
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step Navigation -->
+            <div class="step-navigation" id="step-navigation">
+                <button class="btn btn-secondary" id="btn-prev" disabled>
+                    <i data-lucide="arrow-left"></i> Previous
+                </button>
+                <div class="step-counter" id="step-counter">Step 1 of 9</div>
+                <button class="btn btn-primary" id="btn-next">
+                    Next <i data-lucide="arrow-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- ===== RIGHT PANEL — LIVE PREVIEW ===== -->
+        <section id="preview-panel" class="panel preview-panel">
+            <div class="preview-header">
+                <h3 class="section-label"><i data-lucide="eye"></i> Live Preview</h3>
+                <div class="preview-controls">
+                    <!-- Format Toolbar (hidden unless Edit Mode is active) -->
+                    <div id="format-toolbar" style="display: none; align-items: center; gap: 0.25rem; border-right: 1px solid var(--border); padding-right: 0.5rem; margin-right: 0.5rem;">
+                        <button class="btn btn-icon btn-sm" id="btn-format-bold" title="Bold"><i data-lucide="bold"></i></button>
+                        <button class="btn btn-icon btn-sm" id="btn-format-italic" title="Italic"><i data-lucide="italic"></i></button>
+                        <button class="btn btn-icon btn-sm" id="btn-format-inc" title="Increase Font Size" style="font-weight: bold; font-family:serif;">A+</button>
+                        <button class="btn btn-icon btn-sm" id="btn-format-dec" title="Decrease Font Size" style="font-weight: bold; font-family:serif;">A-</button>
+                        <button class="btn btn-icon btn-sm" id="btn-format-left" title="Align Left"><i data-lucide="align-left"></i></button>
+                        <button class="btn btn-icon btn-sm" id="btn-format-center" title="Align Center"><i data-lucide="align-center"></i></button>
+                        <button class="btn btn-icon btn-sm" id="btn-format-right" title="Align Right"><i data-lucide="align-right"></i></button>
+                    </div>
+
+                    <button class="btn btn-icon btn-sm" id="btn-edit-mode" title="Toggle Manual Edit Mode" style="margin-right: 0.5rem;">
+                        <i data-lucide="edit-3"></i>
+                    </button>
+
+                    <button class="btn btn-icon btn-sm" id="btn-zoom-out" title="Zoom out"><i data-lucide="zoom-out"></i></button>
+                    <span class="zoom-level" id="zoom-level">100%</span>
+                    <button class="btn btn-icon btn-sm" id="btn-zoom-in" title="Zoom in"><i data-lucide="zoom-in"></i></button>
+                </div>
+            </div>
+            <div class="preview-wrapper" id="preview-wrapper">
+                <div class="resume-page" id="resume-preview">
+                    <!-- Resume content rendered here by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Mobile Preview Toggle -->
+        <button class="fab-preview" id="fab-preview" title="Toggle Preview">
+            <i data-lucide="eye"></i>
+        </button>
+    </main>
+
+    <!-- ===== TOAST NOTIFICATIONS ===== -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- ===== CONFIRM MODAL ===== -->
+    <div id="confirm-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-icon"><i data-lucide="alert-triangle"></i></div>
+            <h3 class="modal-title" id="modal-title">Are you sure?</h3>
+            <p class="modal-message" id="modal-message">This action cannot be undone.</p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="modal-cancel">Cancel</button>
+                <button class="btn btn-danger" id="modal-confirm">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/storage.js"></script>
+    <script src="js/templates.js"></script>
+    <script src="js/form.js"></script>
+    <script src="js/preview.js"></script>
+    <script src="js/pdf.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

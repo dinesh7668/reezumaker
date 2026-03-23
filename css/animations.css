@@ -1,0 +1,223 @@
+/* ============================================================
+   ResumeForge — Animations
+   Smooth micro-animations and transitions
+   ============================================================ */
+
+/* ===== KEYFRAMES ===== */
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeSlideOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-16px);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        max-height: 1000px;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes tagPop {
+    0% {
+        opacity: 0;
+        transform: scale(0.6);
+    }
+    60% {
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes toastIn {
+    from {
+        opacity: 0;
+        transform: translateX(60px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes toastOut {
+    from {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(60px) scale(0.9);
+    }
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes loader-progress {
+    0% { transform: translateX(-100%); }
+    50% { transform: translateX(200%); }
+    100% { transform: translateX(-100%); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+@keyframes borderGlow {
+    0%, 100% {
+        border-color: var(--primary);
+        box-shadow: 0 0 10px var(--primary-glow);
+    }
+    50% {
+        border-color: var(--accent);
+        box-shadow: 0 0 20px hsla(var(--accent-hue), 81%, 56%, 0.3);
+    }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+/* ===== TRANSITION UTILITIES ===== */
+.fade-enter {
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.fade-exit {
+    animation: fadeOut 0.3s ease forwards;
+}
+
+.slide-enter {
+    animation: fadeSlideIn 0.4s ease forwards;
+}
+
+.slide-exit {
+    animation: fadeSlideOut 0.3s ease forwards;
+}
+
+/* ===== HOVER MICRO-ANIMATIONS ===== */
+.entry-card {
+    transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+.entry-card:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.template-card {
+    transition: transform var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+/* Button ripple effect */
+.btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+    transform: scale(0);
+    opacity: 0;
+    transition: transform 0.5s ease, opacity 0.3s ease;
+    border-radius: inherit;
+}
+.btn:active::after {
+    transform: scale(2.5);
+    opacity: 1;
+    transition: 0s;
+}
+
+/* Smooth theme transition */
+.theme-transitioning,
+.theme-transitioning * {
+    transition-duration: 0.5s !important;
+}
+
+/* ===== SKELETON LOADING ===== */
+.skeleton {
+    background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-card-hover) 50%, var(--bg-card) 75%);
+    background-size: 400% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+    border-radius: var(--radius-sm);
+}
+
+/* ===== DRAG AND DROP ===== */
+.entry-card.dragging {
+    opacity: 0.5;
+    transform: scale(0.98);
+}
+.entry-card.drag-over {
+    border-color: var(--primary);
+    box-shadow: 0 0 15px var(--primary-glow);
+}
+.entry-card[draggable="true"] .entry-card-header {
+    cursor: grab;
+}
+.entry-card[draggable="true"]:active .entry-card-header {
+    cursor: grabbing;
+}
