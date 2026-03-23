@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Build professional ATS-friendly resumes with our modern resume builder. Choose from multiple templates and download as PDF.">
-    <title>RezuMaker — Resume Builder</title>
+    <title>rezumaker — Resume Builder</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,7 +43,7 @@
                     </defs>
                 </svg>
             </div>
-            <h2 class="loader-title">RezuMaker</h2>
+            <h2 class="loader-title">Rezumaker</h2>
             <p class="loader-subtitle">Initializing your workspace...</p>
             <div class="loader-bar"><div class="loader-bar-fill"></div></div>
         </div>
@@ -101,50 +101,57 @@
         <!-- ===== LEFT PANEL — FORM ===== -->
         <section id="form-panel" class="panel form-panel">
             <!-- Template Selector -->
-            <div class="template-selector" id="template-selector">
-                <h3 class="section-label"><i data-lucide="layout-template"></i> Choose Template</h3>
-                <div class="template-grid">
-                    <button class="template-card active" data-template="minimal">
-                        <div class="template-preview tp-minimal">
-                            <div class="tp-bar"></div><div class="tp-line w80"></div><div class="tp-line w60"></div>
-                            <div class="tp-line w90"></div><div class="tp-line w40"></div>
-                        </div>
-                        <span>Minimal</span>
-                    </button>
-                    <button class="template-card" data-template="modern">
-                        <div class="template-preview tp-modern">
-                            <div class="tp-sidebar"></div>
-                            <div class="tp-content"><div class="tp-line w80"></div><div class="tp-line w60"></div><div class="tp-line w90"></div></div>
-                        </div>
-                        <span>Modern</span>
-                    </button>
-                    <button class="template-card" data-template="elegant">
-                        <div class="template-preview tp-elegant">
-                            <div class="tp-header-bar"></div>
-                            <div class="tp-line w80"></div><div class="tp-line w60"></div>
-                            <div class="tp-divider"></div>
-                            <div class="tp-line w90"></div>
-                        </div>
-                        <span>Elegant</span>
-                    </button>
-                    <button class="template-card" data-template="ats">
-                        <div class="template-preview tp-ats">
-                            <div class="tp-line w100 bold"></div>
-                            <div class="tp-line w60"></div>
-                            <div class="tp-line w80"></div><div class="tp-line w90"></div><div class="tp-line w70"></div>
-                        </div>
-                        <span>ATS</span>
-                    </button>
-                    <button class="template-card" data-template="dp">
-                        <div class="template-preview tp-dp">
-                            <div class="tp-line w60 bold"></div>
-                            <div class="tp-line w40"></div>
-                            <div class="tp-pill w100" style="background:var(--primary); height:4px; border-radius:4px;"></div>
-                            <div class="tp-line w90"></div>
-                            <div class="tp-line w70"></div>
-                        </div>
-                        <span>DP</span>
-                    </button>
+            <div class="template-selector entry-card" id="template-selector-card" style="margin-bottom: 24px;">
+                <div class="entry-card-header" id="template-selector-header">
+                    <h3 class="section-label" style="margin-bottom: 0;"><i data-lucide="layout-template"></i> Choose Template</h3>
+                    <div class="entry-card-actions">
+                        <i data-lucide="chevron-down" class="chevron-icon"></i>
+                    </div>
+                </div>
+                <div class="entry-card-body" id="template-selector-body" style="padding-top: 16px;">
+                    <div class="template-grid" style="margin-bottom: 0;">
+                        <button class="template-card active" data-template="minimal">
+                            <div class="template-preview tp-minimal">
+                                <div class="tp-bar"></div><div class="tp-line w80"></div><div class="tp-line w60"></div>
+                                <div class="tp-line w90"></div><div class="tp-line w40"></div>
+                            </div>
+                            <span>Minimal</span>
+                        </button>
+                        <button class="template-card" data-template="modern">
+                            <div class="template-preview tp-modern">
+                                <div class="tp-sidebar"></div>
+                                <div class="tp-content"><div class="tp-line w80"></div><div class="tp-line w60"></div><div class="tp-line w90"></div></div>
+                            </div>
+                            <span>Modern</span>
+                        </button>
+                        <button class="template-card" data-template="elegant">
+                            <div class="template-preview tp-elegant">
+                                <div class="tp-header-bar"></div>
+                                <div class="tp-line w80"></div><div class="tp-line w60"></div>
+                                <div class="tp-divider"></div>
+                                <div class="tp-line w90"></div>
+                            </div>
+                            <span>Elegant</span>
+                        </button>
+                        <button class="template-card" data-template="ats">
+                            <div class="template-preview tp-ats">
+                                <div class="tp-line w100 bold"></div>
+                                <div class="tp-line w60"></div>
+                                <div class="tp-line w80"></div><div class="tp-line w90"></div><div class="tp-line w70"></div>
+                            </div>
+                            <span>ATS</span>
+                        </button>
+                        <button class="template-card" data-template="dp">
+                            <div class="template-preview tp-dp">
+                                <div class="tp-line w60 bold"></div>
+                                <div class="tp-line w40"></div>
+                                <div class="tp-pill w100" style="background:var(--primary); height:4px; border-radius:4px;"></div>
+                                <div class="tp-line w90"></div>
+                                <div class="tp-line w70"></div>
+                            </div>
+                            <span>DP</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -396,6 +403,10 @@
                     <button class="btn btn-icon btn-sm" id="btn-zoom-out" title="Zoom out"><i data-lucide="zoom-out"></i></button>
                     <span class="zoom-level" id="zoom-level">100%</span>
                     <button class="btn btn-icon btn-sm" id="btn-zoom-in" title="Zoom in"><i data-lucide="zoom-in"></i></button>
+                    <!-- Close button for mobile preview -->
+                    <button class="btn btn-icon btn-sm mobile-only" id="btn-close-preview" title="Close Preview" style="color: var(--danger); margin-left: 0.5rem; border: 1px solid var(--border-color);">
+                        <i data-lucide="x"></i>
+                    </button>
                 </div>
             </div>
             <div class="preview-wrapper" id="preview-wrapper">

@@ -219,7 +219,8 @@ body::before {
     top: 0;
     left: 0;
     right: 0;
-    height: var(--header-height);
+    min-height: var(--header-height);
+    height: auto;
     z-index: 100;
     background: var(--glass-bg);
     backdrop-filter: blur(20px) saturate(1.8);
@@ -231,7 +232,7 @@ body::before {
 .header-inner {
     max-width: 1800px;
     margin: 0 auto;
-    height: 100%;
+    height: var(--header-height);
     padding: 0 24px;
     display: flex;
     align-items: center;
@@ -997,11 +998,20 @@ select {
 /* ===== MOBILE MENU ===== */
 .mobile-only { display: none; }
 .mobile-menu {
-    padding: 8px 16px 12px;
+    padding: 12px 16px 16px;
     display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
+    flex-direction: column;
+    gap: 8px;
     border-top: 1px solid var(--border-color);
+}
+.mobile-menu .btn {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 12px 16px;
+    font-size: 0.95rem;
+}
+.mobile-menu .btn svg {
+    margin-right: 6px;
 }
 .mobile-menu.hidden { display: none; }
 

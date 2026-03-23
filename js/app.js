@@ -100,13 +100,25 @@
         const saved = StorageManager.loadTemplate();
         setActiveTemplate(saved);
 
+        // Foldable card logic
+        const header = document.getElementById('template-selector-header');
+        const card = document.getElementById('template-selector-card');
+        if (header && card) {
+            header.addEventListener('click', () => {
+                card.classList.toggle('expanded');
+            });
+        }
+
         document.querySelectorAll('.template-card').forEach(card => {
-            card.addEventListener('click', () => {
+            card.addEventListener('click', (e) => {
+                e.stopPropagation(); // prevent closing the card if clicking a template
                 const template = card.dataset.template;
                 setActiveTemplate(template);
                 const data = FormManager.collectAllData();
                 PreviewManager.setTemplate(template, data);
                 showToast(`Template: ${template.charAt(0).toUpperCase() + template.slice(1)}`, 'info');
+                
+                // Optionally collapse after choosing, but usually better to let user keep it open if they want to try multiple
             });
         });
     }
@@ -202,6 +214,7 @@
 
         // Mobile preview toggle
         document.getElementById('fab-preview')?.addEventListener('click', toggleMobilePreview);
+        document.getElementById('btn-close-preview')?.addEventListener('click', toggleMobilePreview);
 
         // Handle window resize for preview zoom
         let resizeTimer;
