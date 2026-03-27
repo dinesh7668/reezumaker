@@ -4,7 +4,7 @@ A sleek, modern resume builder web application with a futuristic glassmorphism U
 
 ![ResumeForge](https://img.shields.io/badge/ResumeForge-Resume%20Builder-6366f1?style=for-the-badge)
 
-## ✨ Features
+##  Features
 
 - **Step-by-Step Form Wizard** — Guided 9-step resume creation process
 - **Live Preview** — See your resume update in real-time as you type
@@ -16,7 +16,7 @@ A sleek, modern resume builder web application with a futuristic glassmorphism U
 - **Responsive Design** — Works on desktop, tablet, and mobile
 - **Smooth Animations** — Modern micro-animations and transitions
 
-## 📋 Resume Sections
+##  Resume Sections
 
 1. **Personal Information** — Name, email, phone, address, LinkedIn, portfolio, GitHub
 2. **Professional Summary** — Brief career overview
@@ -28,7 +28,7 @@ A sleek, modern resume builder web application with a futuristic glassmorphism U
 8. **Achievements** — Key accomplishments
 9. **Languages** — Languages spoken with proficiency levels
 
-## 🎨 Templates
+##  Templates
 
 | Template | Description |
 |----------|-------------|
@@ -37,7 +37,7 @@ A sleek, modern resume builder web application with a futuristic glassmorphism U
 | **Elegant** | Gradient header with professional styling |
 | **ATS** | Plain text optimized for applicant tracking systems |
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Quick Start
 
@@ -53,7 +53,7 @@ This is a pure HTML/CSS/JavaScript application. No npm, Node.js, or build tools 
 
 > **Note:** An internet connection is required on first load to fetch Google Fonts, Lucide Icons, and the html2pdf.js library from CDN.
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 Resume Builder/
@@ -72,13 +72,13 @@ Resume Builder/
 └── README.md               # This file
 ```
 
-## ⌨️ Keyboard Shortcuts
+##  Keyboard Shortcuts
 
 | Shortcut | Action |
 |----------|--------|
 | `Ctrl + S` | Save resume to browser storage |
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 - **HTML5** — Semantic markup
 - **CSS3** — Custom properties, glassmorphism, responsive grid
@@ -87,6 +87,3 @@ Resume Builder/
 - **Lucide Icons** — Modern icon library
 - **html2pdf.js** — PDF generation from HTML
 
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
