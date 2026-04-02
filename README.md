@@ -2,8 +2,6 @@
 
 A sleek, modern resume builder web application with a futuristic glassmorphism UI. Build professional, ATS-friendly resumes and download them as clean PDF files — all from your browser.
 
-![Rezumaker]([https://img.shields.io/badge/ResumeForge-Resume%20Builder-6366f1?style=for-the-badge](https://reezumaker.vercel.app/))
-
 ##  Features
 
 - **Step-by-Step Form Wizard** — Guided 9-step resume creation process
