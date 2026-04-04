@@ -1,9 +1,3 @@
-/* ============================================================
-   ResumeForge — PDF Generator
-   Converts the resume preview to a clean, ATS-friendly PDF
-   using html2pdf.js library.
-   ============================================================ */
-
 const PDFGenerator = (() => {
     /**
      * Generate and download the resume as a PDF file.
@@ -15,6 +9,8 @@ const PDFGenerator = (() => {
             showToast('Preview element not found', 'error');
             return;
         }
+
+        let tempContainer = null;
 
         // Show loading state
         const downloadBtns = document.querySelectorAll('#btn-download, #btn-download-m');
@@ -36,14 +32,32 @@ const PDFGenerator = (() => {
             clone.style.minHeight = '297mm';
             clone.style.boxShadow = 'none';
             clone.style.margin = '0';
+            clone.style.position = 'relative';
+            clone.style.top = '0';
+            clone.style.left = '0';
+            clone.style.overflow = 'visible';
+            clone.style.opacity = '1';
+            clone.style.visibility = 'visible';
 
             // Create a temporary container
-            const tempContainer = document.createElement('div');
+            tempContainer = document.createElement('div');
             tempContainer.style.position = 'fixed';
-            tempContainer.style.left = '-9999px';
             tempContainer.style.top = '0';
+            tempContainer.style.left = '0';
+            tempContainer.style.width = '210mm';
+            tempContainer.style.minHeight = '297mm';
+            tempContainer.style.padding = '0';
+            tempContainer.style.margin = '0';
+            tempContainer.style.background = '#ffffff';
+            tempContainer.style.opacity = '0';
+            tempContainer.style.pointerEvents = 'none';
+            tempContainer.style.zIndex = '-1';
+            tempContainer.style.overflow = 'hidden';
             tempContainer.appendChild(clone);
             document.body.appendChild(tempContainer);
+
+            // Give the browser a frame to apply layout before capture.
+            await new Promise(resolve => requestAnimationFrame(() => resolve()));
 
             // Generate filename from name
             const name = data?.personal?.fullName?.trim() || 'Resume';
@@ -72,14 +86,15 @@ const PDFGenerator = (() => {
             // Generate PDF
             await html2pdf().set(options).from(clone).save();
 
-            // Cleanup
-            document.body.removeChild(tempContainer);
-
             showToast('PDF downloaded successfully!', 'success');
         } catch (err) {
             console.error('PDF generation failed:', err);
             showToast('Failed to generate PDF. Please try again.', 'error');
         } finally {
+            if (tempContainer?.parentNode) {
+                tempContainer.parentNode.removeChild(tempContainer);
+            }
+
             // Restore button state
             downloadBtns.forEach(btn => {
                 btn.disabled = false;
