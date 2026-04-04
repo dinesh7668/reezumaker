@@ -83,5 +83,5 @@ Resume Builder/
 - **Vanilla JavaScript** — Modular IIFE pattern
 - **Google Fonts** — Inter typeface
 - **Lucide Icons** — Modern icon library
-- **html2pdf.js** — PDF generation from HTML
+- **html2pdf.js** — PDF generation via HTML
 
