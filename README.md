@@ -80,7 +80,7 @@ Resume Builder/
 
 - **HTML5** — Semantic markup
 - **CSS3** — Custom properties, glassmorphism, responsive grid
-- **Vanilla JavaScript** — Modular IIFE pattern
+- **Vanilla JavaScript** — Modular IIFE patterns
 - **Google Fonts** — Inter typeface
 - **Lucide Icons** — Modern icon library
 - **html2pdf.js** — PDF generation via HTML
